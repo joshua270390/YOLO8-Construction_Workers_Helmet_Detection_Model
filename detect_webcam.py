@@ -59,7 +59,7 @@ while True:
         x1, y1, x2, y2 = map(int, box.xyxy[0])
         confidence = float(box.conf[0])
 
-        if confidence >= 0.7:
+        if confidence >= 0.8:
             label = f"Helmet: Allowed {confidence*100:.2f}%"
             color = (0, 255, 0)
             helmet_detected = True
