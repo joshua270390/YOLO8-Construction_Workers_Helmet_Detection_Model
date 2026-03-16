@@ -1,0 +1,6 @@
+train: D:\HopeAI\AI Course Tamil\week11-Deep Learning\helmet-detection-yolov8\dataset\train
+val: D:\HopeAI\AI Course Tamil\week11-Deep Learning\helmet-detection-yolov8\dataset\valid
+test: D:\HopeAI\AI Course Tamil\week11-Deep Learning\helmet-detection-yolov8\dataset\test
+
+nc: 2
+names: ["no_helmet","helmet"]
