@@ -1,0 +1,8 @@
+ultralytics       # YOLOv8 for object detection
+opencv-python     # OpenCV for video capture and image processing
+imutils           # For easier image/video frame handling
+numpy             # For array manipulations
+winsound
+os
+datetime
+argparse
