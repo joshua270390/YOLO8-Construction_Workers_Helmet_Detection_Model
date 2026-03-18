@@ -20,7 +20,7 @@ print("[INFO] loading helmet detection model...")
 model = YOLO(args["model"])
 
 # create outputs folder if it doesn't exist
-output_folder = "outputs"
+output_folder = "outputs_video"
 os.makedirs(output_folder, exist_ok=True)
 
 # open video file
@@ -36,6 +36,11 @@ fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter(output_path, fourcc, fps, (width, height))
 
 print("[INFO] running helmet detection on video...")
+
+# optional: set a window size multiplier for better visibility
+scale = 0.3  # increase to make video bigger
+window_width = int(width * scale)
+window_height = int(height * scale)
 
 while True:
     ret, frame = cap.read()
@@ -67,9 +72,12 @@ while True:
     # write the annotated frame to output video
     out.write(frame)
 
-    # show frame in window
-    cv2.imshow("Helmet Detection", frame)
-    if cv2.waitKey(1) == 27:  # press ESC to exit
+    # resize frame for display
+    resized_frame = cv2.resize(frame, (window_width, window_height))
+    cv2.imshow("Helmet Detection", resized_frame)
+
+    # quit on 'q' key
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()
