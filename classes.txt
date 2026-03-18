@@ -1,2 +1,4 @@
-no_helmet
 helmet
+vest
+head
+person
