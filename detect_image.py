@@ -40,7 +40,7 @@ for r in results:
             label = f"Helmet: Allowed {confidence*100:.2f}%"
             color = (0,255,0)
 
-        elif class_name == "no_helmet":
+        elif class_name == "head":
             label = f"No Helmet: Not Allowed {confidence*100:.2f}%"
             color = (0,0,255)
 
