@@ -4,6 +4,7 @@
 from ultralytics import YOLO
 import argparse
 import cv2
+import os
 
 # argument parser
 ap = argparse.ArgumentParser()
@@ -24,13 +25,11 @@ image = cv2.imread(args["image"])
 
 # detect objects
 print("[INFO] running helmet detection...")
-results = model(image)
-
 results = model(image, conf=args["confidence"])
 
+# process detections
 for r in results:
     for box in r.boxes:
-
         x1, y1, x2, y2 = map(int, box.xyxy[0])
         class_id = int(box.cls[0])
         confidence = float(box.conf[0])
@@ -38,18 +37,26 @@ for r in results:
 
         if class_name == "helmet":
             label = f"Helmet: Allowed {confidence*100:.2f}%"
-            color = (0,255,0)
-
-        elif class_name == "no_helmet":
+            color = (0, 255, 0)
+        elif class_name == "head":
             label = f"No Helmet: Not Allowed {confidence*100:.2f}%"
-            color = (0,0,255)
-
+            color = (0, 0, 255)
         else:
             continue
 
-        cv2.rectangle(image,(x1,y1),(x2,y2),color,2)
-        cv2.putText(image,label,(x1,y1-10),
-                    cv2.FONT_HERSHEY_SIMPLEX,0.6,color,2)
+        cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+        cv2.putText(image, label, (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+
+# create outputs folder if it doesn't exist
+output_folder = "outputs"
+os.makedirs(output_folder, exist_ok=True)
+
+# save output image
+image_name = os.path.basename(args["image"])
+output_path = os.path.join(output_folder, f"output_{image_name}")
+cv2.imwrite(output_path, image)
+print(f"[INFO] Output saved to {output_path}")
 
 # show output
 cv2.imshow("Helmet Detection", image)
